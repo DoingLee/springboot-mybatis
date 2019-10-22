@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doing.test.dao.UserDAO">
+
+    <resultMap id="USER_DO" type="com.doing.test.dao.domain.UserDO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parkId" column="park_id"/>
+        <result property="image" column="image"/>
+        <result property="shareTimes" column="share_times"/>
+        <result property="borrowTimes" column="borrow_times"/>
+    </resultMap>
+
+    <sql id="UserDO_FIELDS">
+      id, image, name, park_id,
+      share_times, borrow_times
+    </sql>
+
+    <select id="findById" resultMap="USER_DO">
+        SELECT
+        <include refid="UserDO_FIELDS"/>
+        FROM user
+        WHERE id = #{id}
+    </select>
+
+
+</mapper>

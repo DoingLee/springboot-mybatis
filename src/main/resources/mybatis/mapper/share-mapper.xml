@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.doing.test.dao.ShareDAO">
+
+    <resultMap id="SHARE_DO" type="com.doing.test.dao.domain.ShareDO">
+        <id property="id" column="id"/>
+        <result property="parkId" column="park_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="status" column="status"/>
+        <result property="shareDate" column="share_date"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtModified" column="gmt_modified"/>
+    </resultMap>
+
+    <sql id="FIELDS">
+      id, park_id, user_id, status, share_date
+    </sql>
+
+    <sql id="FROM">
+        FROM share RES
+    </sql>
+
+    <sql id="CONDITIONS">
+        <where>1=1
+            <if test="id > 0">
+                AND RES.id = #{id}
+            </if>
+            <if test="parkId != null and parkId > 0">
+                AND RES.park_id = #{parkId}
+            </if>
+            <if test="userId != null and userId > 0">
+                AND RES.user_id = #{userId}
+            </if>
+            <if test="status != null">
+                AND RES.status = #{status}
+            </if>
+            <if test="shareDate != null">
+                AND RES.share_date = #{shareDate}
+            </if>
+            <if test="shareDateUpper != null">
+                AND RES.share_date &gt;=  #{shareDateUpper}
+            </if>
+            <if test="shareDateLower != null">
+                AND RES.share_date &lt;=  #{shareDateLower}
+            </if>
+        </where>
+    </sql>
+
+    <select id="find" parameterType="com.doing.test.domain.query.ShareQuery" resultMap="SHARE_DO">
+        SELECT
+        <include refid="FIELDS"/>
+        <include refid="FROM"/>
+        <include refid="CONDITIONS"/>
+    </select>
+
+    <insert id="insert" parameterType="com.doing.test.dao.domain.ShareDO">
+        insert into
+        share
+        (
+        id, gmt_create, gmt_modified, park_id, user_id, status, share_date
+        )
+        values
+        (
+        #{id}, now(), now(), #{parkId}, #{userId}, 0, #{shareDate}
+        )
+    </insert>
+
+    <update id="updateStatus" parameterType="com.doing.test.domain.query.ShareQuery">
+        update share set status = 1
+        where id = #{id}
+    </update>
+
+</mapper>
