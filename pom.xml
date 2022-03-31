@@ -17,7 +17,7 @@
     </parent>
 
     <properties>
-        <spring-boot-starter-web.version>1.5.7.RELEASE</spring-boot-starter-web.version>
+        <spring-boot-starter-web.version>2.5.12</spring-boot-starter-web.version>
         <commons-lang3.version>3.0</commons-lang3.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-collections4.version>4.1</commons-collections4.version>
